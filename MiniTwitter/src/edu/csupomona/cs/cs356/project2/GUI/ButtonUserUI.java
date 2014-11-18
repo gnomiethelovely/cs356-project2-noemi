@@ -3,10 +3,15 @@ package edu.csupomona.cs.cs356.project2.GUI;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.EventObject;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import edu.csupomona.cs.cs356.project2.GUTS.*;
 
 @SuppressWarnings("serial")
 public class ButtonUserUI extends JPanel {
@@ -35,11 +40,27 @@ public class ButtonUserUI extends JPanel {
 		setInsets(10, 10, 5, 10);
 		addAField(userIdField, 2, 0);
 		addAButton(followUserBtn, 3, 0);
+		
+		followUserBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String[] name = {userIdField.getText()};
+				
+				//User newUser = new User(name);
+				ListUserUI follow = new ListUserUI();
+				follow.setArray(name);
+			}
+		});
 
 		setInsets(10, 10, 5, 10);
 		addAField(msgField, 0, 0);
 		addAButton(postTweet, 1, 0);
 	}
+	
+//	public void fireEvent(String name){
+//		
+//	}
 
 	// creates a text field, coordinates x and y are used to control
 	// the position of the field on the panel
@@ -65,3 +86,18 @@ public class ButtonUserUI extends JPanel {
 		gc.insets = new Insets(top, left, bottom, right);
 	}
 }
+
+class DetailEvent extends EventObject{
+	private String text;
+	
+	public DetailEvent(Object source, String text){
+		super(source);
+		this.text = text;
+	}
+	
+	@SuppressWarnings("unused")
+	public String getText(){
+		return text;
+	}
+}
+	

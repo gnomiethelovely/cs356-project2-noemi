@@ -18,13 +18,13 @@ public class ListUserUI extends JPanel {
 	//provides the framework for the list
 	private DefaultListModel<String> defListModel = new DefaultListModel<>();
 	private DefaultListModel<String> defListModel1 = new DefaultListModel<>();
-
+	private String[] follow = null;
 
 	public ListUserUI() {
 		createDetails();
 	}
 
-	private void createDetails() {
+	public void createDetails() {
 		//sets new layout 
 		setLayout(new GridBagLayout());
 
@@ -48,8 +48,13 @@ public class ListUserUI extends JPanel {
 		String[] news = { "wow", "cool", "news", "more news" };
 		populateList(news, defListModel);
 		
-		String[] friends = {"name", "name"};
-		populateList(friends, defListModel1);
+		populateList(follow, defListModel1);
+	}
+	
+	public void setArray(String[] list){
+		for(int i = 0; i < list.length; i++){
+			follow[i] = list[i];
+		}
 	}
 
 	//walks through the provided array and inserts the items into the list

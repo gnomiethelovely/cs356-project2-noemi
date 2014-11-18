@@ -1,51 +1,72 @@
 package edu.csupomona.cs.cs356.project2.GUTS;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-public class User extends Observable implements Observer{
+public class User implements IObserver, ISubject{
 	private String id;
-	private List<User> followers;
-	private List<User> following;
-	private List<String> newsFeed;
-
-	public User(){
-		id = null;
-		followers = new ArrayList<>();
-		following = new ArrayList<>();
-		newsFeed = new ArrayList<>();
-	}
+	private ArrayList<User> followers;
+	private ArrayList<User> following;
+	private ArrayList<String> newsFeed;
 	
 	public User(String name){
-		this.id = name;
+		setName(name);
 		followers = new ArrayList<>();
 		following = new ArrayList<>();
 		newsFeed = new ArrayList<>();
 	}
-	
-	public void attach(User observer){
-		following.add(observer);
-		setChanged();
-		notifyObservers(observer.getId());
-	}
-	
+
 	@Override
-	public void update(Observable subject, Object observer) {
-		if (!id.equals(subject.toString())){
-			System.out.println("New name is: " + id);
+	public void attach(User observer) {
+		followers.add(observer);
+		notifyUsers(observer);
+	}
+
+	@Override
+	public void notifyUsers(User observer) {
+		update(observer.getName());
+	}
+
+	@Override
+	public void update(String name) {
+		System.out.println(name + " is now following you!");
+	}
+	
+	public void tweet(String tweet){
+		newsFeed.add(tweet);
+	}
+	
+	public void displayTweets(){
+		for(String tweet : newsFeed){
+			System.out.println(tweet);
 		}
-		System.out.println("Following " + observer.toString());
 	}
-
-	public String getId() {
+	
+	public void follow(User observer){
+		following.add(observer);
+		notifyUsers(observer);
+	}
+	
+	public void seeFollowing(){
+		int i = 1;
+		for(User obs : following){
+			System.out.println(i + " " + obs.getName());
+			i++;
+		}
+	}
+	
+	public void seeFollowers(){
+		int i = 1;
+		for(User obs : followers){
+			System.out.println(i + " " + obs.getName());
+			i++;
+		}
+	}
+	
+	public void setName(String name){		
+		this.id = name;
+	}
+	
+	public String getName(){
 		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-		setChanged();
-		notifyObservers(id);
 	}
 }
