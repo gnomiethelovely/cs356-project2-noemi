@@ -26,17 +26,29 @@ public class TreeAdminUI extends JPanel {
 		setBorder(BorderFactory.createTitledBorder("Tree View"));
 
 		//create a few nodes
-		DefaultMutableTreeNode CS356;
 		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Root");
+		DefaultMutableTreeNode theSquad;
+		DefaultMutableTreeNode CS356;
 
 		//create a tree
 		JTree tree = null;
 		tree = addATree(tree, rootNode, 10);
 
 		//add some files
+		addAFile("mark", rootNode);
+		addAFile("aaron", rootNode);
+		addAFile("dan", rootNode);
+		
 		CS356 = addAFile("CS356", rootNode);
-		addAFile("User", CS356);
-		addAFile("AnotherUser", CS356);
+		addAFile("noemi", CS356);
+		addAFile("ryan", CS356);
+
+		theSquad = addAFile("The Squad", rootNode);
+		addAFile("gnomiethelovely", theSquad);
+		addAFile("delucks", theSquad);
+		addAFile("jeck", theSquad);
+		addAFile("bink", theSquad);
+		addAFile("SailorMoog", theSquad);
 
 		//add a scrollbox for the tree
 		JScrollPane scrollBox = new JScrollPane(tree);

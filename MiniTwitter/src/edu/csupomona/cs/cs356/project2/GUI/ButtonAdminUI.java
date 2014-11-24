@@ -4,19 +4,32 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import edu.csupomona.cs.cs356.project2.GUTS.*;
 
 @SuppressWarnings("serial")
 public class ButtonAdminUI extends JPanel {
 
 	// create the constraints object for placement details
 	private GridBagConstraints gc = new GridBagConstraints();
+	private User me = new User("gnomiethelovely");
+	private Analytics ana = new Analytics();
+	private Group g = new Group("theSquad");
+	private List<IComponent> users = new ArrayList<IComponent>();
+	private Message m = new Message(users);
+	private Positive p = new Positive(users);
 
 	public ButtonAdminUI() {
 		createDetails();
+		users.add(me);
 	}
 
 	//creates all objects and handles the creation of their 
@@ -41,6 +54,64 @@ public class ButtonAdminUI extends JPanel {
 		JButton showTotGroupBtn = new JButton("Total Groups");
 		JButton showTotMsgBtn = new JButton("Total Messages");
 		JButton showPosPercentBtn = new JButton("Positive %");
+		
+		addUserBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String[] name = {userIdField.getText()};
+				User newUser = new User(name[0]);
+			}
+		});
+		
+		addGroupBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String[] name = {groupIdField.getText()};
+				Group newGroup = new Group(name[0]);
+			}
+		});
+		
+		openUserViewBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				UserUI uui = new UserUI(me.getName());
+			}
+		});
+		
+		showTotUserBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ana.sum(me);
+			}
+		});
+		
+		showTotGroupBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ana.sum(g);
+			}
+		});
+		
+		showTotMsgBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ana.sum(m);
+			}
+		});
+		
+		showPosPercentBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ana.sum(p);
+			}
+		});
 
 		// sets the layout to a GridBagLayout
 		setLayout(new GridBagLayout());

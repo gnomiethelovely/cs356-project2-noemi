@@ -18,7 +18,8 @@ public class ButtonUserUI extends JPanel {
 
 	// create the constraints object for placement details
 	private GridBagConstraints gc = new GridBagConstraints();
-
+	private User me = new User("gnomiethelovely");
+	
 	public ButtonUserUI() {
 		createDetails();
 	}
@@ -40,16 +41,27 @@ public class ButtonUserUI extends JPanel {
 		setInsets(10, 10, 5, 10);
 		addAField(userIdField, 2, 0);
 		addAButton(followUserBtn, 3, 0);
-		
+
+		//listens for button press to follow another user
 		followUserBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String[] name = {userIdField.getText()};
-				
-				//User newUser = new User(name);
-				ListUserUI follow = new ListUserUI();
-				follow.setArray(name);
+				String[] name = { userIdField.getText() };
+				User u = new User(name[0]);
+				me.follow(u);
+				ListUserUI.addToFollow(name[0]);
+			}
+		});
+
+		//listens for button press to tweet a message 
+		postTweet.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String[] name = { msgField.getText() };
+				me.tweet(name[0]);
+				ListUserUI.addToNews(name[0]);
 			}
 		});
 
@@ -57,10 +69,6 @@ public class ButtonUserUI extends JPanel {
 		addAField(msgField, 0, 0);
 		addAButton(postTweet, 1, 0);
 	}
-	
-//	public void fireEvent(String name){
-//		
-//	}
 
 	// creates a text field, coordinates x and y are used to control
 	// the position of the field on the panel
@@ -87,17 +95,16 @@ public class ButtonUserUI extends JPanel {
 	}
 }
 
-class DetailEvent extends EventObject{
+@SuppressWarnings("serial")
+class DetailEvent extends EventObject {
 	private String text;
-	
-	public DetailEvent(Object source, String text){
+
+	public DetailEvent(Object source, String text) {
 		super(source);
 		this.text = text;
 	}
-	
-	@SuppressWarnings("unused")
-	public String getText(){
+
+	public String getText() {
 		return text;
 	}
 }
-	

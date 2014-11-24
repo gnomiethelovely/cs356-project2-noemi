@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -18,8 +19,13 @@ public class ListUserUI extends JPanel {
 	//provides the framework for the list
 	private DefaultListModel<String> defListModel = new DefaultListModel<>();
 	private DefaultListModel<String> defListModel1 = new DefaultListModel<>();
-	private String[] follow = null;
-
+	private static String[] news = new String[100];
+	private static String[] follow = new String[100];
+	private static int i = 0;
+	private static int j = 0;
+	private static JScrollPane scrollBox = null;
+	private static JScrollPane scrollBox1 = null;
+	
 	public ListUserUI() {
 		createDetails();
 	}
@@ -36,27 +42,32 @@ public class ListUserUI extends JPanel {
 		following = addAList(following, 15, 15, 8, defListModel1);
 
 		//adds the scroll box 
-		JScrollPane scrollBox = null;
 		setInsets(5, 10, 5, 10);
 		scrollBox = addAScrollBox(scrollBox, newsFeed, 260, 280, 0, 0);
 		
-		JScrollPane scrollBox1 = null;
 		setInsets(5, 10, 5, 10);
 		scrollBox1 = addAScrollBox(scrollBox1, following, 260, 280, 1, 0);
 
 		//populates the list with strings
-		String[] news = { "wow", "cool", "news", "more news" };
 		populateList(news, defListModel);
-		
 		populateList(follow, defListModel1);
-	}
-	
-	public void setArray(String[] list){
-		for(int i = 0; i < list.length; i++){
-			follow[i] = list[i];
-		}
+		
 	}
 
+	public static void addToNews(String item){
+		news[i] = item;
+		i++;
+		scrollBox.repaint();
+		scrollBox.revalidate();
+	}
+	
+	public static void addToFollow(String item){
+		follow[j] = item;
+		j++;
+		scrollBox1.repaint();
+		scrollBox1.revalidate();
+	}
+	
 	//walks through the provided array and inserts the items into the list
 	private void populateList(String[] stuff, DefaultListModel<String> model) {
 		for (String thing : stuff) {

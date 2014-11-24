@@ -6,13 +6,12 @@ import javax.swing.SwingUtilities;
 public class UserUI {
 
 	//triggers the user UI to display 
-	public UserUI(){
+	public UserUI(String name){
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				JFrame frame = new MainFrameUserUI(
-						"Mini Twitter - User UI Panel");
+				JFrame frame = new MainFrameUserUI(name);
 				frame.setSize(600, 400);
 				frame.setLocationRelativeTo(null);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
