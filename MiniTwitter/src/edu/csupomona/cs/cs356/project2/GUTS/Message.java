@@ -1,31 +1,19 @@
 package edu.csupomona.cs.cs356.project2.GUTS;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //handles calculating the total amount of messages 
 public class Message {
 	
-	private int msgTot;
-	private List<IComponent> people;
-	private List<String> news;
+	private static int msgTot;
 	
-	public Message(List<IComponent> users){
+	public Message(){
 		setMsgTot(0);
-		people = new ArrayList<>(users);
 	}
 
 	public int getMsgTot() {
-		for(IComponent us : people){
-			news = ((User) us).getNewsFeed(us);
-			for(String n : news){
-				msgTot++;
-			}
-		}
 		return msgTot;
 	}
 
-	public void setMsgTot(int msgTot) {
-		this.msgTot = msgTot;
+	public static void setMsgTot(int msgTot) {
+		Message.msgTot = msgTot;
 	}
 }

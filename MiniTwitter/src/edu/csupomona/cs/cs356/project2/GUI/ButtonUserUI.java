@@ -1,15 +1,10 @@
 package edu.csupomona.cs.cs356.project2.GUI;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.EventObject;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import edu.csupomona.cs.cs356.project2.GUTS.*;
 
@@ -18,13 +13,12 @@ public class ButtonUserUI extends JPanel {
 
 	// create the constraints object for placement details
 	private GridBagConstraints gc = new GridBagConstraints();
-	private User me = new User("gnomiethelovely");
 	
-	public ButtonUserUI() {
-		createDetails();
+	public ButtonUserUI(User u, List<IComponent> users) {
+		createDetails(u, users);
 	}
 
-	public void createDetails() {
+	public void createDetails(User me, List<IComponent> users) {
 		// create text field objects
 		JTextField userIdField = new JTextField(10);
 		JTextField msgField = new JTextField(10);
@@ -48,9 +42,13 @@ public class ButtonUserUI extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String[] name = { userIdField.getText() };
-				User u = new User(name[0]);
-				me.follow(u);
+				for(IComponent u : users){
+					if (u.getName().equals(name[0])){
+						me.follow(u);
+					}
+				}
 				ListUserUI.addToFollow(name[0]);
+				ListUserUI.refreshView(me.getName(), me, users);
 			}
 		});
 
@@ -62,6 +60,7 @@ public class ButtonUserUI extends JPanel {
 				String[] name = { msgField.getText() };
 				me.tweet(name[0]);
 				ListUserUI.addToNews(name[0]);
+				ListUserUI.refreshView(me.getName(), me, users);
 			}
 		});
 
@@ -92,19 +91,5 @@ public class ButtonUserUI extends JPanel {
 	// spacing
 	private void setInsets(int top, int left, int bottom, int right) {
 		gc.insets = new Insets(top, left, bottom, right);
-	}
-}
-
-@SuppressWarnings("serial")
-class DetailEvent extends EventObject {
-	private String text;
-
-	public DetailEvent(Object source, String text) {
-		super(source);
-		this.text = text;
-	}
-
-	public String getText() {
-		return text;
 	}
 }

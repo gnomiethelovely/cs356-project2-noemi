@@ -12,7 +12,7 @@ public class Positive {
 	private int pos;
 	private List<String> news;
 	private List<IComponent> people;
-	private CharSequence cs = "Hello";
+	private CharSequence cs = "hello";
 	
 	public Positive(List<IComponent> user){
 		setPercent(0.0);

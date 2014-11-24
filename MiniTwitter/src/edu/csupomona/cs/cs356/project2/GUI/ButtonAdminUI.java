@@ -4,14 +4,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.*;
+import java.util.*;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import edu.csupomona.cs.cs356.project2.GUTS.*;
 
@@ -24,7 +20,7 @@ public class ButtonAdminUI extends JPanel {
 	private Analytics ana = new Analytics();
 	private Group g = new Group("theSquad");
 	private List<IComponent> users = new ArrayList<IComponent>();
-	private Message m = new Message(users);
+	private Message m = new Message();
 	private Positive p = new Positive(users);
 
 	public ButtonAdminUI() {
@@ -61,6 +57,7 @@ public class ButtonAdminUI extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String[] name = {userIdField.getText()};
 				User newUser = new User(name[0]);
+				users.add(newUser);
 			}
 		});
 		
@@ -77,7 +74,7 @@ public class ButtonAdminUI extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				UserUI uui = new UserUI(me.getName());
+				UserUI uui = new UserUI(me.getName(), me, users);
 			}
 		});
 		

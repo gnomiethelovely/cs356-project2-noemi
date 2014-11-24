@@ -12,6 +12,7 @@ public class User implements IObserver, ISubject, IComponent{
 	private List<IComponent> following;
 	private List<String> newsFeed;
 	private static int userCount = 0;
+	private static int msgCount = 0;
 	
 	public User(String name){
 		this.setName(name);
@@ -34,7 +35,7 @@ public class User implements IObserver, ISubject, IComponent{
 
 	@Override //from IObserver
 	public void update(String name) {
-		System.out.println(name + " is now following you!");
+		System.out.println("You are now following: " + name);
 	}
 	
 	public void follow(IComponent observer){
@@ -45,6 +46,8 @@ public class User implements IObserver, ISubject, IComponent{
 	public void tweet(String tweet){
 		newsFeed.add(tweet);
 		System.out.println(tweet);
+		msgCount++;
+		Message.setMsgTot(msgCount);
 	}
 	
 	public void displayTweets(List<IComponent> follow){

@@ -1,15 +1,12 @@
 package edu.csupomona.cs.cs356.project2.GUI;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.util.ArrayList;
+import java.awt.*;
+import java.util.List;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
+
+import edu.csupomona.cs.cs356.project2.GUTS.IComponent;
+import edu.csupomona.cs.cs356.project2.GUTS.User;
 
 @SuppressWarnings("serial")
 public class ListUserUI extends JPanel {
@@ -23,8 +20,6 @@ public class ListUserUI extends JPanel {
 	private static String[] follow = new String[100];
 	private static int i = 0;
 	private static int j = 0;
-	private static JScrollPane scrollBox = null;
-	private static JScrollPane scrollBox1 = null;
 	
 	public ListUserUI() {
 		createDetails();
@@ -42,9 +37,11 @@ public class ListUserUI extends JPanel {
 		following = addAList(following, 15, 15, 8, defListModel1);
 
 		//adds the scroll box 
+		JScrollPane scrollBox = null;
 		setInsets(5, 10, 5, 10);
 		scrollBox = addAScrollBox(scrollBox, newsFeed, 260, 280, 0, 0);
 		
+		JScrollPane scrollBox1 = null;
 		setInsets(5, 10, 5, 10);
 		scrollBox1 = addAScrollBox(scrollBox1, following, 260, 280, 1, 0);
 
@@ -53,19 +50,22 @@ public class ListUserUI extends JPanel {
 		populateList(follow, defListModel1);
 		
 	}
+	
+	@SuppressWarnings("unused")
+	public static void refreshView(String name, User u, List<IComponent> users){
+		UserUI uui = new UserUI(name, u, users);
+	}
 
+	//adds tweets to the newsFeed
 	public static void addToNews(String item){
 		news[i] = item;
 		i++;
-		scrollBox.repaint();
-		scrollBox.revalidate();
 	}
 	
+	//adds users to the follow list when you want to follow them 
 	public static void addToFollow(String item){
 		follow[j] = item;
 		j++;
-		scrollBox1.repaint();
-		scrollBox1.revalidate();
 	}
 	
 	//walks through the provided array and inserts the items into the list
