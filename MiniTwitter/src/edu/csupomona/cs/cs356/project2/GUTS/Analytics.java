@@ -1,3 +1,12 @@
+/*
+ * Noemi Zamarripa 
+ * 
+ * CS356: Object Oriented Design 
+ * Prof. Sun
+ * 11-23-2014
+ * 
+ * Project 2: Mini Twitter
+ */
 package edu.csupomona.cs.cs356.project2.GUTS;
 
 //implements the Visitor interface and gets the different sums of these 
@@ -21,7 +30,8 @@ public class Analytics implements IVisitor {
 
 	@Override
 	public void sum(Positive percentTot) {
-		System.out.println("Positive message percent: " + percentTot.getPercent());
+		System.out.println("Positive message percent: "
+				+ percentTot.getPercent());
 	}
 
 }

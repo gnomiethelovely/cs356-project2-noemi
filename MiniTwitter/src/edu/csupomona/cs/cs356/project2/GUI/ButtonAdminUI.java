@@ -1,3 +1,12 @@
+/*
+ * Noemi Zamarripa 
+ * 
+ * CS356: Object Oriented Design 
+ * Prof. Sun
+ * 11-23-2014
+ * 
+ * Project 2: Mini Twitter
+ */
 package edu.csupomona.cs.cs356.project2.GUI;
 
 import java.awt.Dimension;
@@ -28,8 +37,8 @@ public class ButtonAdminUI extends JPanel {
 		users.add(me);
 	}
 
-	//creates all objects and handles the creation of their 
-	//attributes
+	// creates all objects and handles the creation of their
+	// attributes
 	private void createDetails() {
 		// sets dimension of the area on the panel for the
 		// objects to be displayed
@@ -50,60 +59,60 @@ public class ButtonAdminUI extends JPanel {
 		JButton showTotGroupBtn = new JButton("Total Groups");
 		JButton showTotMsgBtn = new JButton("Total Messages");
 		JButton showPosPercentBtn = new JButton("Positive %");
-		
+
 		addUserBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String[] name = {userIdField.getText()};
+				String[] name = { userIdField.getText() };
 				User newUser = new User(name[0]);
 				users.add(newUser);
 			}
 		});
-		
+
 		addGroupBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String[] name = {groupIdField.getText()};
+				String[] name = { groupIdField.getText() };
 				Group newGroup = new Group(name[0]);
 			}
 		});
-		
+
 		openUserViewBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				UserUI uui = new UserUI(me.getName(), me, users);
 			}
 		});
-		
+
 		showTotUserBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ana.sum(me);
 			}
 		});
-		
+
 		showTotGroupBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ana.sum(g);
 			}
 		});
-		
+
 		showTotMsgBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ana.sum(m);
 			}
 		});
-		
+
 		showPosPercentBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ana.sum(p);

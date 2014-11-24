@@ -1,3 +1,12 @@
+/*
+ * Noemi Zamarripa 
+ * 
+ * CS356: Object Oriented Design 
+ * Prof. Sun
+ * 11-23-2014
+ * 
+ * Project 2: Mini Twitter
+ */
 package edu.csupomona.cs.cs356.project2.GUI;
 
 import java.util.List;
@@ -10,8 +19,8 @@ import edu.csupomona.cs.cs356.project2.GUTS.User;
 
 public class UserUI {
 
-	//triggers the user UI to display 
-	public UserUI(String name, User u, List<IComponent> users){
+	// triggers the user UI to display
+	public UserUI(String name, User u, List<IComponent> users) {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
