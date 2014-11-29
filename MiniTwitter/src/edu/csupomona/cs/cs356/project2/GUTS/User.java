@@ -22,6 +22,8 @@ public class User implements IObserver, ISubject, IComponent {
 	private List<String> newsFeed;
 	private static int userCount = 0;
 	private static int msgCount = 0;
+	private static long creationTime = 0;
+	private static long lastUpdateTime = 0;
 
 	public User(String name) {
 		this.setName(name);
@@ -29,6 +31,8 @@ public class User implements IObserver, ISubject, IComponent {
 		following = new ArrayList<>();
 		newsFeed = new ArrayList<>();
 		userCount++;
+		creationTime = System.currentTimeMillis();
+		System.out.println("Creation time of " + name + " " + creationTime);
 	}
 
 	@Override
@@ -41,6 +45,8 @@ public class User implements IObserver, ISubject, IComponent {
 	@Override
 	// from ISubject
 	public void notifyUsers(IComponent observer) {
+		lastUpdateTime += creationTime;
+		System.out.println("Last updated: " + lastUpdateTime);
 		update(observer.getName());
 	}
 
@@ -60,6 +66,8 @@ public class User implements IObserver, ISubject, IComponent {
 		System.out.println(tweet);
 		msgCount++;
 		Message.setMsgTot(msgCount);
+		lastUpdateTime += creationTime;
+		System.out.println("Last updated: " + lastUpdateTime);
 	}
 
 	public void displayTweets(List<IComponent> follow) {
@@ -120,5 +128,9 @@ public class User implements IObserver, ISubject, IComponent {
 
 	public int getUserCount() {
 		return userCount;
+	}
+	
+	public long getLastUpdateTime(){
+		return lastUpdateTime;
 	}
 }

@@ -19,13 +19,16 @@ public class Group implements IComponent {
 	// holds the name of the group
 	private String groupName;
 	private static int groupCount = 0;
-
+	private long creationTime = 0;
+	
 	// creates a new group, assigning it a name and
 	// an empty list
 	public Group(String name) {
 		this.setName(name);
 		group = new ArrayList<>();
 		groupCount++;
+		creationTime = System.currentTimeMillis();
+		System.out.println("Creation time of " + name + " " + creationTime);
 	}
 
 	// adds a component, in this case a user to the list

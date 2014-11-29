@@ -29,6 +29,7 @@ public class ButtonAdminUI extends JPanel {
 	private Analytics ana = new Analytics();
 	private Group g = new Group("theSquad");
 	private List<IComponent> users = new ArrayList<IComponent>();
+	private List<IComponent> groups = new ArrayList<IComponent>();
 	private Message m = new Message();
 	private Positive p = new Positive(users);
 
@@ -60,6 +61,26 @@ public class ButtonAdminUI extends JPanel {
 		JButton showTotMsgBtn = new JButton("Total Messages");
 		JButton showPosPercentBtn = new JButton("Positive %");
 
+		JButton idVerificationBtn = new JButton("Verify ID");
+		JButton findLastUpdateBtn = new JButton("Last updated user");
+
+		findLastUpdateBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lastUpdated(users);
+			}
+		});
+
+		idVerificationBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				validID((ArrayList<IComponent>) users);
+				validID((ArrayList<IComponent>) groups);
+			}
+		});
+
 		addUserBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -76,6 +97,7 @@ public class ButtonAdminUI extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				String[] name = { groupIdField.getText() };
 				Group newGroup = new Group(name[0]);
+				groups.add(newGroup);
 			}
 		});
 
@@ -138,21 +160,27 @@ public class ButtonAdminUI extends JPanel {
 
 		// long button, takes up 3 spaces
 		gc.gridwidth = 3;
-		setInsets(5, 5, 150, 5);
+		setInsets(5, 5, 5, 5);
 		addAButton(openUserViewBtn, 0, 2);
 
 		// //Row 4////
+		
+		gc.gridwidth = 1;
+		setInsets(5, 5, 70, 5);
+		addAButton(idVerificationBtn, 0, 3);
+		addAButton(findLastUpdateBtn, 1, 3);
+
+		// //Row 5////
 
 		// back to single length buttons
 		gc.gridwidth = 1;
 		setInsets(5, 5, 5, 5);
-		addAButton(showTotUserBtn, 0, 3);
-		addAButton(showTotMsgBtn, 0, 4);
+		addAButton(showTotUserBtn, 0, 4);
+		addAButton(showTotMsgBtn, 1, 4);
 
-		// //Row 5////
-
-		addAButton(showTotGroupBtn, 1, 3);
-		addAButton(showPosPercentBtn, 1, 4);
+		// //Row 6////
+		addAButton(showTotGroupBtn, 0, 5);
+		addAButton(showPosPercentBtn, 1, 5);
 	}
 
 	// creates a text field, coordinates x and y are used to control
@@ -177,5 +205,40 @@ public class ButtonAdminUI extends JPanel {
 	// spacing
 	private void setInsets(int top, int left, int bottom, int right) {
 		gc.insets = new Insets(top, left, bottom, right);
+	}
+
+	private void validID(ArrayList<IComponent> users) {
+		ArrayList<String> names = new ArrayList<>();
+		for (IComponent c : users) {
+			names.add(c.getName());
+		}
+
+		Set<String> unique = new HashSet<>(names);
+		for (String temp : unique) {
+			if (Collections.frequency(names, temp) > 1) {
+				System.out.println("Duplicate id found! " + temp);
+			} else if (temp.contains(" ")) {
+				System.out.println("Invalid input! " + temp);
+			}
+		}
+	}
+
+	private void lastUpdated(List<IComponent> users) {
+		ArrayList<Long> times = new ArrayList<>();
+		long max = 0;
+		int i = 0;
+
+		for (IComponent c : users) {
+			times.add(((User) c).getLastUpdateTime());
+		}
+
+		for (Long t : times) {
+			if (t > max) {
+				max = t;
+				i = times.indexOf(t);
+			}
+		}
+
+		System.out.println(users.get(i).getName());
 	}
 }
